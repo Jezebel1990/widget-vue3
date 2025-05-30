@@ -28,7 +28,7 @@ export function setMessage (message: string): void {
   state.message = message
 }
 
-export function SelectFeedbackType (type: string): void {
+export function SetFeedbackType (type: string): void {
   state.feedbackType = type
 }
 
@@ -47,7 +47,7 @@ export function setFingerprint (fingerprint: string): void {
 export function resetStore (): void {
   setCurrentComponent(initialState.currentComponent)
   setMessage(initialState.message)
-  SelectFeedbackType(initialState.feedbackType)
+  SetFeedbackType(initialState.feedbackType)
   setCurrentPage(initialState.currentPage)
   setApiKey(initialState.apiKey)
   setFingerprint(initialState.fingerprint)

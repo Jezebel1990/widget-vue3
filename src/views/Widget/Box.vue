@@ -1,57 +1,75 @@
 <template>
   <div class="box animate__animated animate__fadeInUp animate__faster">
-  <div
-   :class="{
-     'justify-between': canShowAdditionalControlAndInfo,
-     'justify-end': !canShowAdditionalControlAndInfo
-    }"
-    class="relative w-full flex">
-    <button
-     v-if="canShowAdditionalControlAndInfo"
-     @click="() => ({})"
-     :disabled="canGoBack"
-     :class="{ invisible: canGoBack }"
-     class="text-xl text-gray-800 focus:outline-none"
+    <div
+      :class="{
+        'justify-between': canShowAdditionalControlAndInfo,
+        'justify-end': !canShowAdditionalControlAndInfo
+      }"
+      class="relative w-full flex"
     >
-    <icon name="arrow-right" :color="colors.gray['800']"/>
-    </button>
+      <button
+        v-if="canShowAdditionalControlAndInfo"
+        @click="back"
+        :disabled="canGoBack"
+        :class="{ invisible: canGoBack }"
+        class="text-xl text-gray-800 focus:outline-none"
+      >
+        <icon name="arrow-right" :color="colors.gray['800']" />
+      </button>
 
-    <p
-     v-if="canShowAdditionalControlAndInfo"
-     class="text-xl font-black text-center text-brand-main"
+      <p
+        v-if="canShowAdditionalControlAndInfo"
+        class="text-xl font-black text-center text-brand-main"
+      >
+        {{ label }}
+      </p>
+
+      <button
+        @click="emit('close-box')"
+        class="text-xl text-gray-800 focus:outline-none"
+      >
+        <icon size="14" name="close" :color="colors.gray['800']" />
+      </button>
+    </div>
+
+    <wizard />
+
+    <div
+      v-if="canShowAdditionalControlAndInfo"
+      class="text-gray-800 text-sm flex items-center mt-3"
     >
-    {{ label }}
-    </p>
-
-    <button
-     @click="() => emit('close-box')"
-     class="text-xl text-gray-800 focus:outline-none"
-    >
-    <icon size="14" name="close" :color="colors.gray['800']"/>
-    </button>
-  </div>
-
-  wizard
-  <div class="text-gray-800 text-sm flex" v-if="canShowAdditionalControlAndInfo">
-   <icon name="chat" class="mr-1" :color="brandColors.graydark" />
-   widget by
-   <span class="ml-1 font-bold">feedbacker</span>
-  </div>
+      <icon name="chat" class="mr-1" :color="brandColors.graydark" />
+      widget by
+      <span class="ml-1 font-bold">feedbacker</span>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ComputedRef, SetupContext } from 'vue'
 import { brand } from '../../../palette'
 import Icon from '../../components/Icon/index.vue'
+import Wizard from '../../components/Wizard/index.vue'
 import colors from 'tailwindcss/colors'
 import useStore from '../../hooks/store'
+import useNavigation, { Navigation } from '../../hooks/navigation'
+
+interface SetupReturn {
+  emit: SetupContext['emit'];
+  back: Navigation['back'];
+  canGoBack: ComputedRef<boolean>;
+  label: ComputedRef<string>;
+  canShowAdditionalControlAndInfo: ComputedRef<boolean>;
+  brandColors: Record<string, string>;
+  colors: Record<string, string>;
+}
 
 export default defineComponent({
   emits: ['close-box'],
-  components: { Icon },
-  setup (_, { emit }) {
+  components: { Icon, Wizard },
+  setup (_, { emit }: SetupContext): SetupReturn {
     const store = useStore()
+    const { back } = useNavigation()
 
     const label = computed(() => {
       switch (store.feedbackType) {
@@ -66,21 +84,20 @@ export default defineComponent({
       }
     })
 
-    const canGoBack = computed(() => {
-      return store.currentComponent === 'SelectFeedbackType'
-    })
+    const canGoBack = computed(() => store.currentComponent === 'SelectFeedbackType')
 
-    const canShowAdditionalControlAndInfo = computed(() => {
-      return store.currentComponent !== 'Success' && store.currentComponent !== 'Error'
-    })
+    const canShowAdditionalControlAndInfo = computed(() =>
+      store.currentComponent !== 'Success' && store.currentComponent !== 'Error'
+    )
 
     return {
       emit,
+      back,
       canGoBack,
-      brandColors: brand,
       label,
-      colors,
-      canShowAdditionalControlAndInfo
+      canShowAdditionalControlAndInfo,
+      brandColors: brand,
+      colors
     }
   }
 })

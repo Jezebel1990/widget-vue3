@@ -25,7 +25,7 @@
       </p>
 
       <button
-        @click="emit('close-box')"
+        @click="() => emit('close-box')"
         class="text-xl text-gray-800 focus:outline-none"
       >
         <icon size="14" name="close" :color="colors.gray['800']" />
@@ -67,37 +67,42 @@ interface SetupReturn {
 export default defineComponent({
   emits: ['close-box'],
   components: { Icon, Wizard },
-  setup (_, { emit }: SetupContext): SetupReturn {
+  setup (_, { emit }) {
     const store = useStore()
     const { back } = useNavigation()
 
-    const label = computed(() => {
-      switch (store.feedbackType) {
-        case 'ISSUE':
-          return 'Reporte um problema'
-        case 'IDEA':
-          return 'Nos fale a sua ideia'
-        case 'OTHER':
-          return 'Abra sua mente'
-        default:
-          return 'O que você tem em mente?'
+    const label = computed<string>(() => {
+      if (store.feedbackType === 'ISSUE') {
+        return 'Reporte um problema'
       }
+
+      if (store.feedbackType === 'IDEA') {
+        return 'Nos fale a sua ideia'
+      }
+
+      if (store.feedbackType === 'OTHER') {
+        return 'Abra sua mente'
+      }
+
+      return 'O que você tem em mente?'
     })
 
-    const canGoBack = computed(() => store.currentComponent === 'SelectFeedbackType')
+    const canGoBack = computed<boolean>(() => {
+      return store.currentComponent === 'SelectFeedbackType'
+    })
 
-    const canShowAdditionalControlAndInfo = computed(() =>
-      store.currentComponent !== 'Success' && store.currentComponent !== 'Error'
-    )
+    const canShowAdditionalControlAndInfo = computed<boolean>(() => {
+      return store.currentComponent !== 'Success' && store.currentComponent !== 'Error'
+    })
 
     return {
       emit,
-      back,
-      canGoBack,
+      colors,
       label,
-      canShowAdditionalControlAndInfo,
+      back,
       brandColors: brand,
-      colors
+      canGoBack,
+      canShowAdditionalControlAndInfo
     }
   }
 })

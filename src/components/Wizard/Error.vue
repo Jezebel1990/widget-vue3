@@ -32,7 +32,7 @@ import palette from '../../../palette.js'
 
 interface SetupReturn {
     goBack(): void;
-    palette: any;
+    palette: Record<string, string>;
 }
 
 export default defineComponent({

@@ -1,25 +1,110 @@
 <template>
-  <div class="w-full h-3/4 flex flex-col justify-center items-center bg-brand-main">
-    <h1 class="text-6xl font-black text-brand-gray">Playground</h1>
-    <p class="text-2xl mt-3 font-regular text-brand-gray">Este é o playground, use para testar o widget.</p>
+  <div class="w-full min-h-screen flex flex-col">
+    <!-- Seção: Boas-vindas -->
+    <section class="flex flex-col justify-center items-center flex-1 text-center px-6 py-16 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg">Bem-vindo ao Playground 🚀</h1>
+      <p class="text-xl text-gray-100 md:text-2xl mt-4 text-white/80 max-w-2xl">
+        Aqui você pode testar o widget e experimentar novas interações. Explore sem medo!
+      </p>
+    </section>
+
+    <!-- Seção: Lançamento -->
+    <section class="relative flex flex-col md:flex-row justify-center items-center md:items-end flex-1 bg-gray-100 px-6 pt-32">
+      <div class="w-full overflow-hidden leading-none absolute -top-1 left-0 z-10">
+        <svg
+          class="w-full h-24 md:h-32"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#6366f1" />
+              <stop offset="50%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#ec4899" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,
+            82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,
+            72,985.66,92.83c70.05,18.48,146.53,26.09,
+            214.34,3V0H0V27.35A600.21,600.21,0,0,0,
+            321.39,56.44Z"
+            fill="url(#gradient)"
+          />
+        </svg>
+      </div>
+      <img
+        src="https://i.imgur.com/Lr186D1.png"
+        alt="Lançamento"
+        class="w-400 md:w-1/2 self-end animate__animated animate__fadeInUp"
+      />
+      <div class="text-center md:ml-8 py-72">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">Estamos decolando!</h2>
+        <p class="text-lg font-mono text-gray-600 max-w-md">
+          Novas funcionalidades estão chegando. Fique de olho nas atualizações semanais do widget.
+        </p>
+      </div>
+    </section>
+
+    <!-- Seção: Novidades -->
+    <section class="flex flex-col-reverse md:flex-row justify-center items-center flex-1 bg-white px-6 py-16">
+      <div class="text-center md:text-left">
+        <h2 class="text-4xl font-bold text-indigo-600 mb-4">O que vem por aí 👀</h2>
+        <p class="text-lg font-mono text-gray-700 max-w-md">
+          Em breve: novas integrações, opções de personalização e melhorias de performance!
+        </p>
+      </div>
+      <img
+        src="https://i.imgur.com/SzWcjyK.png"
+        alt="Novidades"
+        class="w-350 md:w-1/2 mb-6 md:mb-0 md:ml-8 animate__animated animate__fadeInUp"
+      />
+    </section>
+
+    <!-- Seção: Footer -->
+    <section class="relative flex flex-col justify-center items-center flex-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 px-6 pt-0 pb-16">
+      <div class="w-full overflow-hidden leading-none absolute -top-1 left-0">
+        <svg
+          class="w-full h-24 md:h-32"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,
+            82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,
+            72,985.66,92.83c70.05,18.48,146.53,26.09,
+            214.34,3V0H0V27.35A600.21,600.21,0,0,0,
+            321.39,56.44Z"
+            fill="#fff"
+          />
+        </svg>
+      </div>
+      <div class="text-center z-10 mt-16">
+        <h2 class="text-xl font-extrabold text-white mb-4">Widget &copy; {{ currentYear }}</h2>
+        <p class="text-lg text-gray-100">Todos os direitos reservados.</p>
+      </div>
+    </section>
+
+    <!-- Componente Widget -->
+    <Widget />
   </div>
-  <div class="w-full h-3/4 flex flex-col justify-center items-center bg-brand-gray">
-    <h1 class="text-6xl font-black text-brand-graydark">🚀</h1>
-  </div>
-  <div class="w-full h-3/4 flex flex-col justify-center items-center bg-brand-main">
-    <h1 class="text-6xl font-black text-brand-gray">👀</h1>
-  </div>
-  <div class="w-full h-3/4 flex flex-col justify-center items-center bg-brand-gray">
-    <h1 class="text-6xl font-black text-brand-graydark">🚨</h1>
-  </div>
-  <widget />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import Widget from '../Widget/index.vue'
 
 export default defineComponent({
-  components: { Widget }
+  components: { Widget },
+  setup () {
+    const currentYear = ref(new Date().getFullYear())
+    return { currentYear }
+  }
 })
 </script>
+
+<style>
+@import 'animate.css';
+</style>

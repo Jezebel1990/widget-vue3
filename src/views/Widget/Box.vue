@@ -111,7 +111,8 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .box {
   @apply fixed z-50 bottom-0 right-0 mb-5 mr-5 bg-white rounded-xl
-    py-5 px-5 flex flex-col items-center shadow-xl select-none;
+    py-5 px-5 flex flex-col items-center select-none;
   width: 400px;
+   box-shadow: 0 5px 20px rgba(139, 92, 246, 0.5);
 }
 </style>

@@ -1,9 +1,24 @@
 const APP_URL = process.env.APP_URL || 'http://localhost:8080'
 
 describe('Widget', () => {
-  it('Check if widget button are shown', () => {
+  it('should open and close the widget', () => {
+    // Visita o app
     cy.visit(APP_URL)
-    cy.wait(2000)
-    cy.get('#widget-open-button')
+
+    // Garante que o botão de abrir está visível
+    cy.get('#widget-open-button').should('be.visible')
+
+    // Clica no botão de abrir
+    cy.get('#widget-open-button').click()
+
+    // Aguarda a transição/teleport
+    cy.wait(500)
+
+    // Clica no botão de fechar
+    cy.get('#widget-close-button').click()
+
+    // Aguarda e garante que voltou ao estado inicial
+    cy.wait(500)
+    cy.get('#widget-close-button').should('not.exist')
   })
 })

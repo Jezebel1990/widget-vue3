@@ -25,6 +25,7 @@
       </p>
 
       <button
+        id="widget-close-button"
         @click="() => emit('close-box')"
         class="text-xl text-gray-800 focus:outline-none"
       >

@@ -1,34 +1,48 @@
-# widget
+# Widget
+> Este é um projeto de widget interativo para feedback desenvolvido com **Vue3**, **TypeScript** e **Tailwind CSS**, que pode ser integrado em qualquer página para coletar sugestões, ideias e problemas dos usuários. Possui testes unitários e E2E com **Jest** e **Cypress**.
 
-## Project setup
+![Start](src/assets/images/start.png)
+![End](src/assets/images/end.png)
+
+## Instalação
+
+### Instale as dependências
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Rode a aplicação localmente
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Testes
 
-### Run your unit tests
+### Testes Unitários
 ```
 npm run test:unit
 ```
 
-### Run your end-to-end tests
+###  Testes E2E com Cypress
 ```
 npm run test:e2e
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+![e2e](src/assets/images/e2e.gif)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Funcionalidades
+✅ Widget responsivo e animado com Teleport.
+✅ Coleta de feedback por tipo (ideia, problema, outro).
+✅ Fechamento/abertura com comunicação via window.postMessage.
+✅ Controle de navegação e estados internos via Store.
+✅ Mock de iframe e integração em ambiente externo.
+✅ Testes unitários + E2E.
+
+
+## Licença
+
+Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE para mais informações.
+
+Feito com ♥ por [Jezebel Guedes](https://www.linkedin.com/in/jezebel-guedes/) 👋 Entre em contato!

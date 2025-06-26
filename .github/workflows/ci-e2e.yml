@@ -1,4 +1,4 @@
-name: Widget e2e testing
+name: Widget E2E Testing
 
 on:
   workflow_dispatch:
@@ -13,21 +13,34 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - run: npm install --legacy-peer-deps
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-      - run: npm run build
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build project
+        run: npm run build
         env:
           NODE_ENV: production
 
-      - name: Run project locally
+      - name: Serve production build
         run: |
-          npm install serve --legacy-peer-deps
-          $(npm bin)/serve dist -s -p 8080 &
+          npm install -g serve
+          serve dist -s -l 8080 &
+        env:
+          NODE_ENV: production
 
-      - name: Run tests
-        uses: cypress-io/github-action@v2
-        with:	
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:8080
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v5
+        with:
           browser: chrome
           headless: true
